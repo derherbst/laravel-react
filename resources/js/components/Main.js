@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Product from './Product.js';
 
 /* Main Component */
 class Main extends Component {
@@ -12,6 +13,7 @@ class Main extends Component {
         //Initialize the state in the constructor
         this.state = {
             products: [],
+            currentProduct: null
         }
 
     }
@@ -36,20 +38,33 @@ class Main extends Component {
                 /* When using list you need to specify a key
                  * attribute that is unique for each list item
                 */
-                <li key={product.id} >
+
+                <li onClick={
+                    () => this.handleClick(product)} key={ product.id } >
                     { product.title }
-                </li>
+                </li> // выводить нзвание продукта при клике на нем
             );
         })
+    }
+
+    handleClick(product) {
+        //handleClick is used to set the state
+        this.setState({currentProduct:product});
+
     }
 
     render() {
         /* Some css code has been removed for brevity */
         return (
             <div>
-                <ul>
-                    { this.renderProducts() }
-                </ul>
+                <div>
+                    <h3> All products </h3>
+                    <ul>
+                        { this.renderProducts() }
+                    </ul>
+                </div>
+
+                <Product product={this.state.currentProduct} />
             </div>
 
         );
